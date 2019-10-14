@@ -16,10 +16,11 @@ export class BoardService {
    */
   async createBoard(data: Board) {
     const user = await this.afAuth.auth.currentUser;
+    const dt = new Date().toISOString().slice(0, 10)
     return this.db.collection('boards').add({
       ...data,
       uid: user.uid,
-      tasks: [{ description: 'Hello!', label: 'yellow' }]
+      tasks: [{ description: 'Hello!', label: 'yellow', startdate: dt }]
     });
   }
 
@@ -33,6 +34,8 @@ export class BoardService {
           return this.db
             .collection<Board>('boards', ref =>
               ref.where('uid', '==', user.uid).orderBy('priority')
+//                ref.where('uid', '==', 'fgEKjlKWp4RYQBQt0fjJLDg9Unf1').orderBy('startdate')
+//                ref.orderBy('startdate')
             )
             .valueChanges({ idField: 'id' });
         } else {
@@ -68,6 +71,36 @@ export class BoardService {
    * Updates the tasks on board
    */
   updateTasks(boardId: string, tasks: Task[]) {
+    console.log("Comes here " + tasks.toString);
+
+    // Define color based on Month
+
+    let labelOptions = ["purple", "blue", "green", "yellow", "red", 'olive','purple', 'blue', 'green', 'yellow', 'red', 'olive','purple'];
+
+     //Convert Date ISO to String so that it shows prefilled
+     for (var i=0;i<tasks.length;i++)
+    {
+      if (tasks[i].startdate)
+      tasks[i].startdate = new Date(tasks[i].startdate).toISOString().slice(0, 10);
+      tasks[i].label = labelOptions[parseInt(tasks[i].startdate.split('-')[1])];
+    }
+    //Sort Tasks by Date
+    tasks.sort(compare);
+
+        function compare(a, b) {
+        const genreA = a.startdate;
+        const genreB = b.startdate;
+
+        let comparison = 0;
+        if (genreA > genreB) {
+          comparison = 1;
+        } else if (genreA < genreB) {
+          comparison = -1;
+        }
+        return comparison;
+      }
+
+
     return this.db
       .collection('boards')
       .doc(boardId)

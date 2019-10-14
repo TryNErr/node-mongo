@@ -22,7 +22,8 @@
       *ngFor="let task of board.tasks; let i = index"
       (click)="openDialog(task, i)"
     >
-      <mat-card [ngClass]="task.label"> {{ task.description }} </mat-card>
+      <mat-card [ngClass]="task.label"> {{task.startdate}} - {{ task.description }} - {{ task.description2 }}</mat-card>
+
     </div>
 
     <button mat-stroked-button (click)="openDialog()">

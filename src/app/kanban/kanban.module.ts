@@ -11,6 +11,8 @@ import { BoardComponent } from './board/board.component';
 import { FormsModule } from '@angular/forms';
 import { BoardDialogComponent } from './dialogs/board-dialog.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import { TaskDialogComponent } from './dialogs/task-dialog.component';
 
 @NgModule({
@@ -29,6 +31,8 @@ import { TaskDialogComponent } from './dialogs/task-dialog.component';
     DragDropModule,
     MatDialogModule,
     MatButtonToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents: [BoardDialogComponent, TaskDialogComponent]
 })

@@ -5,15 +5,10 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [ 
-      {
-        "source": "**",
-        "run": {
-          "serviceId": "nest-angular-ssr",
-          "region": "us-central1" 
-        }
-      }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
   }
 }
